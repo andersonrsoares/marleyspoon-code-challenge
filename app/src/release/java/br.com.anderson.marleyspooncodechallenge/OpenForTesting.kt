@@ -1,4 +1,4 @@
-package br.com.anderson.cocuscodechallenge.testing
+package br.com.anderson.mar.testing
 
 @Target(AnnotationTarget.CLASS)
 annotation class OpenForTesting

@@ -1,0 +1,27 @@
+{
+  "data": {
+    "recipe": {
+      "chef": {
+        "name": "Mark Zucchiniberg"
+      },
+      "description": "Warmer weather means the ushering in of grill season and this recipe completely celebrates the grill (or grill pan)! Squash and green beans are nicely charred then take a bath in a zesty cilantro-jalapeño dressing. After the steaks are perfectly seared, the same dressing does double duty as a tasty finishing sauce. A fresh radish salad tops it all off for crunch and a burst of color. Cook, relax, and enjoy!",
+      "sys": {
+        "id": "2E8bc3VcJmA8OgmQsageas"
+      },
+      "title": "Grilled Steak & Vegetables with Cilantro-Jalapeño Dressing",
+      "photo": {
+        "url": "https://images.ctfassets.net/kk2bw5ojx476/3TJp6aDAcMw6yMiE82Oy0K/2a4cde3c1c7e374166dcce1e900cb3c1/SKU1503_Hero_102__1_-6add52eb4eec83f785974ddeac3316b7.jpg"
+      },
+      "tagsCollection": {
+        "items": [
+          {
+            "name": "gluten free"
+          },
+          {
+            "name": "healthy"
+          }
+        ]
+      }
+    }
+  }
+}

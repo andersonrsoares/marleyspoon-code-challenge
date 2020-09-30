@@ -2,6 +2,9 @@ package br.com.anderson.marleyspooncodechallenge.di
 
 import android.app.Application
 import androidx.room.Room
+import br.com.anderson.marleyspooncodechallenge.BuildConfig
+import br.com.anderson.marleyspooncodechallenge.provider.ResourceProvider
+import br.com.anderson.marleyspooncodechallenge.service.ContentfulService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -18,26 +21,20 @@ import javax.inject.Singleton
 @Module(includes = [ViewModelModule::class])
 class AppModule {
 
-    /*val URL = "https://www.codewars.com/api/v1/"
+    val URL = "https://graphql.contentful.com/content/v1/spaces/kk2bw5ojx476?access_token=7ac531648a1b5e1dab6c18b0979f822a5aad0fe5f1109829b8a197eb2be4b84c"
 
     @Singleton
     @Provides
-    fun provideService(gson: Gson,okHttpClient: OkHttpClient): CodeWarsService {
+    fun provideService(gson: Gson,okHttpClient: OkHttpClient): ContentfulService {
         return Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
-            .create(CodeWarsService::class.java)
+            .create(ContentfulService::class.java)
     }
 
-
-    @Singleton
-    @Provides
-    fun autorizationInterceptorProvider(): AutorizationInterceptor {
-        return AutorizationInterceptor()
-    }
 
     @Singleton
     @Provides
@@ -47,12 +44,12 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun okHttpClientProvider(autorizationInterceptor: AutorizationInterceptor): OkHttpClient{
+    fun okHttpClientProvider(): OkHttpClient{
         return OkHttpClient().newBuilder()
             .connectTimeout(6000, TimeUnit.MILLISECONDS)
             .readTimeout((1000 * 60).toLong(), TimeUnit.MILLISECONDS)
             .writeTimeout((1000 * 60).toLong(), TimeUnit.MILLISECONDS)
-            .addInterceptor(autorizationInterceptor).apply {
+            .apply {
                 if (BuildConfig.DEBUG) {
                     val logInterceptor = HttpLoggingInterceptor()
                     logInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -61,16 +58,8 @@ class AppModule {
             }.build()
     }
 
-    @Singleton
-    @Provides
-    fun gsonProvider() : Gson{
-        return GsonBuilder().apply {
-             registerTypeAdapter(Languages::class.java, LanguageDeserializer())
-         }.create()
-    }
 
-
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideCodeWarsDb(app: Application): CodeWarsDb {
         return Room
@@ -83,13 +72,13 @@ class AppModule {
     @Provides
     fun provideCodeWarsDao(db: CodeWarsDb): CodeWarsDao {
         return db.codeWarsDao()
-    }
+    }*/
 
     @Singleton
     @Provides
     fun provideResource(app: Application): ResourceProvider {
         return ResourceProvider(app)
-    }*/
+    }
 
 
 }

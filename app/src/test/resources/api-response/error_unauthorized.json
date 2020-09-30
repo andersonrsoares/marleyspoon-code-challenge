@@ -1,0 +1,11 @@
+{
+  "errors": [{
+    "message": "Authentication failed. The access token is missing from the headers",
+    "extensions": {
+      "contentful": {
+        "code": "ACCESS_TOKEN_MISSING",
+        "requestId": "675290ad-c0df-42fe-8f5f-7c5240376faa"
+      }
+    }
+  }]
+}

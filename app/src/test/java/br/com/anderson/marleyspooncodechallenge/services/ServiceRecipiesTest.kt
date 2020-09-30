@@ -6,8 +6,10 @@ import br.com.anderson.marleyspooncodechallenge.dto.RecipeQueryDTO
 import br.com.anderson.marleyspooncodechallenge.dto.RecipesQueryDTO
 import org.junit.*
 import com.google.common.truth.Truth.assertThat
+import com.google.gson.stream.MalformedJsonException
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import retrofit2.HttpException
 
 
 @RunWith(JUnit4::class)
@@ -77,5 +79,37 @@ class ServiceRecipiesTest : BaseServiceTest() {
         assertThat(recipe.chef?.name).contains("Mark Zucchiniberg")
     }
 
+
+    @Test
+    fun `test response not json`() {
+        //GIVEN
+        ApiUtil.enqueueResponse(mockWebServer,"error_json_response.html")
+
+        val response = service.getRecipes(RecipesQueryDTO()).test()
+        //when
+        val request = mockWebServer.takeRequest()
+        assertThat(request.path).isEqualTo("/")
+        //THEN
+
+        response.assertError {
+            it is MalformedJsonException
+        }
+    }
+
+    @Test
+    fun `test unauthorized`() {
+        //GIVEN
+        ApiUtil.enqueueResponse(mockWebServer =  mockWebServer,fileName = "error_unauthorized.json",statuscode = 401)
+
+        val response = service.getRecipes(RecipesQueryDTO()).test()
+        //when
+        val request = mockWebServer.takeRequest()
+        assertThat(request.path).isEqualTo("/")
+
+        //THEN
+        response.assertError {
+            it is HttpException && (it as? HttpException)?.code() == 401
+        }
+    }
 
 }

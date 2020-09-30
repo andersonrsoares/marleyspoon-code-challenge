@@ -1,15 +1,15 @@
 package br.com.anderson.marleyspooncodechallenge.dto
 import com.google.gson.annotations.SerializedName
 
-data class RecipeResponseDTO(
+class RecipeResponseDTO(
     @SerializedName("data")
     var recipeRootDTO: RecipeRootDTO? = null
-)
+): BaseResponseDTO()
 
-data class RecipeCollencionResponseDTO(
+class RecipeCollencionResponseDTO(
     @SerializedName("data")
     var recipeCollectionRootDTO: RecipeCollectionRootDTO? = null
-)
+):BaseResponseDTO()
 
 
 data class RecipeRootDTO(
@@ -70,3 +70,26 @@ data class SysDTO(
     var id: String = ""
 )
 
+open class BaseResponseDTO(
+    @SerializedName("errors")
+    var errors: List<Error> = listOf()
+)
+
+data class Error(
+    @SerializedName("extensions")
+    var extensions: Extensions = Extensions(),
+    @SerializedName("message")
+    var message: String = ""
+)
+
+data class Extensions(
+    @SerializedName("contentful")
+    var contentful: Contentful = Contentful()
+)
+
+data class Contentful(
+    @SerializedName("code")
+    var code: String = "",
+    @SerializedName("requestId")
+    var requestId: String = ""
+)

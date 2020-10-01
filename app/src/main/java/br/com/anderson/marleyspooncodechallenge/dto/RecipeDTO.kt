@@ -1,4 +1,5 @@
 package br.com.anderson.marleyspooncodechallenge.dto
+import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import com.google.gson.annotations.SerializedName
 
 class RecipeResponseDTO(
@@ -27,7 +28,12 @@ data class RecipeCollectionDTO(
     var items: List<RecipeDTO>? = null,
     @SerializedName("total")
     var total: Int = 0
-)
+){
+        fun toRecipes(): List<Recipe>{
+            return items?.map { it.toRecipe() }.orEmpty()
+        }
+
+}
 
 data class RecipeDTO(
     @SerializedName("photo")
@@ -42,7 +48,11 @@ data class RecipeDTO(
     var description: String = "",
     @SerializedName("chef")
     var chef: ChefDTO? = null
-)
+){
+    fun toRecipe(): Recipe{
+       return Recipe(photo = photo?.url, title = title, description = description, id = sys?.id.toString(), tags = tagsCollection?.items?.map { it.name }, chefName = chef?.name)
+    }
+}
 
 
 data class ChefDTO(
@@ -57,7 +67,7 @@ data class TagsCollectionDTO(
 
 data class TagDTO(
     @SerializedName("name")
-    var name: String? = null
+    var name: String = ""
 )
 
 data class PhotoDTO(

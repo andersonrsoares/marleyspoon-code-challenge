@@ -20,7 +20,7 @@ class RecipeDaoTest : BaseDaoTest(){
                 .assertValue { it.isEmpty() }
     }
 
-    @Test fun `test insert and get recipe`() {
+    @Test fun `test insert and get recipes`() {
 
         database.contentfulDao().insertRecipe(RECIPE).blockingAwait()
 
@@ -29,18 +29,27 @@ class RecipeDaoTest : BaseDaoTest(){
                 .assertValue { it.find { f-> f.id == "id" } != null }
     }
 
-    @Test fun `test update and get recipe`() {
+    @Test fun `test update and get recipes`() {
         database.contentfulDao().insertRecipe(RECIPE).blockingAwait()
 
         val newTilte = "new title"
 
         val updated = RECIPE.copy(title = newTilte)
-        database.contentfulDao().insertRecipe(updated).blockingAwait()
+        database.contentfulDao().updateRecipe(updated).blockingAwait()
 
         database.contentfulDao().allRecipes()
                 .test()
                 // assertValue asserts that there was only one emission of the user
                 .assertValue { it.find { f->  f.title  == newTilte} != null }
+    }
+
+    @Test fun `test insert and get recipe`() {
+
+        database.contentfulDao().insertRecipe(RECIPE).blockingAwait()
+
+        database.contentfulDao().getRecipes("id")
+            .test()
+            .assertValue { it == RECIPE}
     }
 
     companion object {

@@ -8,26 +8,23 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.anderson.marleyspooncodechallenge.R
-import br.com.anderson.marleyspooncodechallenge.adapter.ListRecipeAdapter
 import br.com.anderson.marleyspooncodechallenge.di.Injectable
 import br.com.anderson.marleyspooncodechallenge.extras.observe
-import br.com.anderson.marleyspooncodechallenge.extras.setDivider
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.viewmodel.ListRecipeViewModel
-import kotlinx.android.synthetic.main.fragment_list_recipe.*
+import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.fragment_recipe.*
 import javax.inject.Inject
 
 
-class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable{
+class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
 
-    lateinit var adapter: ListRecipeAdapter
     @Inject
-    lateinit var viewModel: ListRecipeViewModel
+    lateinit var viewModel: RecipeViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycleView()
-        initrRefresh()
         initRetryButton()
         initObservers()
         loadRecipes()
@@ -40,35 +37,35 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable{
     }
 
     private fun loadRecipes(){
-        viewModel.listRecipes()
+        viewModel.fetchRecipe(recipeId())
     }
 
     private fun initObservers(){
-        observe(viewModel.dataRecipes,this::onLoadDataListRecipies)
+        observe(viewModel.dataRecipe,this::onLoadDataRecipe)
         observe(viewModel.message,this::onMessage)
         observe(viewModel.loading,this::onLoading)
         observe(viewModel.retry,this::onRetry)
-        observe(viewModel.clean,this::onClean)
     }
 
-    private fun initRecycleView(){
-        adapter = ListRecipeAdapter()
-        adapter.itemOnClick = this::onItemClick
-        recycleview.adapter = adapter
-        recycleview.layoutManager = LinearLayoutManager(requireContext()).apply {
-            orientation = LinearLayoutManager.VERTICAL
+
+    private fun onLoadDataRecipe(data: Recipe) {
+        Glide.with(requireContext()).load(data.photo).apply(
+            RequestOptions()
+                .placeholder(R.drawable.image_placeholder)
+                .centerCrop()).into(imageview)
+
+        title.text = data.title
+        description.text = data.description
+        data.chefName?.let {
+            chef.text =  resources.getString(R.string.label_chef,it)
         }
-        recycleview.setDivider(R.drawable.divider_recycleview)
+
+        data.tags?.takeIf { it.isNotEmpty() }?.let {
+            tags.text =  resources.getString(R.string.label_chef,it.joinToString(", "))
+        }
     }
 
-    private fun onItemClick(recipe:Recipe){
-        navController().navigate(ListRecipeFragmentDirections.actionListRecipeFragmentToRecipeFragment(recipe.id))
-    }
-
-    private fun onLoadDataListRecipies(data: List<Recipe>) {
-        adapter.submitList(data)
-    }
-
+    private fun recipeId() = RecipeFragmentArgs.fromBundle(requireArguments()).recipeId
 
     private fun initRetryButton(){
         retrybutton.setOnClickListener(this::onRetryClick)
@@ -77,14 +74,6 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable{
     fun onRetryClick(view: View){
         viewModel.refresh()
         view.isVisible = false
-    }
-
-    private fun initrRefresh(){
-        swiperefresh.setOnRefreshListener(this::onRefresh)
-    }
-
-    fun onRefresh(){
-        viewModel.refresh()
     }
 
     private fun onMessage(data: String) {
@@ -105,14 +94,9 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable{
         if(data){
             cleanMessages()
         }
-        swiperefresh.isRefreshing = data
         progressbar.isVisible = data
     }
 
-    private fun onClean(data: Boolean) {
-        if(data)
-           adapter.submitList(arrayListOf())
-    }
 
     /**
      * Created to be able to override in tests

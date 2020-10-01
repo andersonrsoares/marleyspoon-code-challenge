@@ -6,13 +6,13 @@ import java.util.*
 open class QueryDTO(@field:Expose private val query: String) {
 
     @Expose
-    private val vars: MutableMap<String, Any>
+    private val variables: MutableMap<String, Any>
     fun setVariable(name: String, value: Any) {
-        vars[name] = value
+        variables[name] = value
     }
 
     init {
-        vars = HashMap()
+        variables = HashMap()
     }
 
     override fun equals(other: Any?): Boolean {

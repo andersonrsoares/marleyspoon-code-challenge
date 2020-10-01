@@ -25,7 +25,7 @@ class ServiceRecipiesTest : BaseServiceTest() {
 
         //when
         val request = mockWebServer.takeRequest()
-        assertThat(request.path).isEqualTo("/")
+        assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
         //THEN
 
         response.assertNoErrors()
@@ -56,7 +56,7 @@ class ServiceRecipiesTest : BaseServiceTest() {
 
         //when
         val request = mockWebServer.takeRequest()
-        assertThat(request.path).isEqualTo("/")
+        assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
         //THEN
 
         response.assertNoErrors()
@@ -88,7 +88,7 @@ class ServiceRecipiesTest : BaseServiceTest() {
         val response = service.getRecipes(RecipesQueryDTO()).test()
         //when
         val request = mockWebServer.takeRequest()
-        assertThat(request.path).isEqualTo("/")
+        assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
         //THEN
 
         response.assertError {
@@ -104,7 +104,7 @@ class ServiceRecipiesTest : BaseServiceTest() {
         val response = service.getRecipes(RecipesQueryDTO()).test()
         //when
         val request = mockWebServer.takeRequest()
-        assertThat(request.path).isEqualTo("/")
+        assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
 
         //THEN
         response.assertError {

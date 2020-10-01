@@ -16,9 +16,9 @@ import retrofit2.http.*
 
 interface  ContentfulService {
 
-    @POST("/")
+    @POST("/content/v1/spaces/kk2bw5ojx476")
     fun getRecipes(@Body body: RecipesQueryDTO): Single<RecipeCollencionResponseDTO>
 
-    @POST("/")
+    @POST("/content/v1/spaces/kk2bw5ojx476")
     fun getRecipe(@Body body: RecipeQueryDTO): Single<RecipeResponseDTO>
 }

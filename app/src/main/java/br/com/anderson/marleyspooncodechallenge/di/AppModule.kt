@@ -3,6 +3,10 @@ package br.com.anderson.marleyspooncodechallenge.di
 import android.app.Application
 import androidx.room.Room
 import br.com.anderson.marleyspooncodechallenge.BuildConfig
+import br.com.anderson.marleyspooncodechallenge.dto.Contentful
+import br.com.anderson.marleyspooncodechallenge.extras.AutorizationInterceptor
+import br.com.anderson.marleyspooncodechallenge.persistence.ContentfulDao
+import br.com.anderson.marleyspooncodechallenge.persistence.ContentfulDb
 import br.com.anderson.marleyspooncodechallenge.provider.ResourceProvider
 import br.com.anderson.marleyspooncodechallenge.service.ContentfulService
 import com.google.gson.Gson
@@ -21,14 +25,14 @@ import javax.inject.Singleton
 @Module(includes = [ViewModelModule::class])
 class AppModule {
 
-    val URL = "https://graphql.contentful.com/content/v1/spaces/kk2bw5ojx476?access_token=7ac531648a1b5e1dab6c18b0979f822a5aad0fe5f1109829b8a197eb2be4b84c"
+    val URL = "https://graphql.contentful.com/"
 
     @Singleton
     @Provides
-    fun provideService(gson: Gson,okHttpClient: OkHttpClient): ContentfulService {
+    fun provideService(okHttpClient: OkHttpClient): ContentfulService {
         return Retrofit.Builder()
             .baseUrl(URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
@@ -44,11 +48,12 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun okHttpClientProvider(): OkHttpClient{
+    fun okHttpClientProvider(autorizationInterceptor: AutorizationInterceptor): OkHttpClient{
         return OkHttpClient().newBuilder()
             .connectTimeout(6000, TimeUnit.MILLISECONDS)
             .readTimeout((1000 * 60).toLong(), TimeUnit.MILLISECONDS)
             .writeTimeout((1000 * 60).toLong(), TimeUnit.MILLISECONDS)
+            .addInterceptor(autorizationInterceptor)
             .apply {
                 if (BuildConfig.DEBUG) {
                     val logInterceptor = HttpLoggingInterceptor()
@@ -58,21 +63,26 @@ class AppModule {
             }.build()
     }
 
-
-    /*@Singleton
+    @Singleton
     @Provides
-    fun provideCodeWarsDb(app: Application): CodeWarsDb {
+    fun autorizationInterceptorProvider(): AutorizationInterceptor {
+        return AutorizationInterceptor()
+    }
+
+    @Singleton
+    @Provides
+    fun provideContentfulDb(app: Application): ContentfulDb {
         return Room
-            .databaseBuilder(app, CodeWarsDb::class.java, "codewars.db")
+            .databaseBuilder(app, ContentfulDb::class.java, "contentfulDb.db")
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideCodeWarsDao(db: CodeWarsDb): CodeWarsDao {
-        return db.codeWarsDao()
-    }*/
+    fun provideContentfulDao(db: ContentfulDb): ContentfulDao {
+        return db.contentfulDao()
+    }
 
     @Singleton
     @Provides

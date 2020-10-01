@@ -47,7 +47,7 @@ class RecipeDaoTest : BaseDaoTest(){
 
         database.contentfulDao().insertRecipe(RECIPE).blockingAwait()
 
-        database.contentfulDao().getRecipes("id")
+        database.contentfulDao().getRecipe("id")
             .test()
             .assertValue { it == RECIPE}
     }

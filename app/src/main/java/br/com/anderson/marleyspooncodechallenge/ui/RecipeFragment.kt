@@ -61,7 +61,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
         }
 
         data.tags?.takeIf { it.isNotEmpty() }?.let {
-            tags.text =  resources.getString(R.string.label_chef,it.joinToString(", "))
+            tags.text =  resources.getString(R.string.label_tags,it.joinToString(", "))
         }
     }
 

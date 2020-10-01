@@ -37,7 +37,7 @@ class RecipeRepository @Inject constructor(val localDataSouse: ContentfulDao,
     }
 
     private fun getLocalRecipe(id:String):Flowable<DataSourceResult<Recipe>>{
-      return localDataSouse.getRecipes(id)
+      return localDataSouse.getRecipe(id)
            .subscribeOn(Schedulers.io())
            .transformToDataSourceResult()
            .toFlowable()

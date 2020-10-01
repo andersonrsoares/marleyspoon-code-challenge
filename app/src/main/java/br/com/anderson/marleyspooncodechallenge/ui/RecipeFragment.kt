@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,13 +57,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
 
         title.text = data.title
         description.text = data.description
-        data.chefName?.let {
+        chef.isGone = data.chefName?.let {
             chef.text =  resources.getString(R.string.label_chef,it)
-        }
+        }  == null
 
-        data.tags?.takeIf { it.isNotEmpty() }?.let {
+        tags.isGone = data.tags?.takeIf { it.isNotEmpty() }?.let {
             tags.text =  resources.getString(R.string.label_tags,it.joinToString(", "))
-        }
+        } == null
     }
 
     private fun recipeId() = RecipeFragmentArgs.fromBundle(requireArguments()).recipeId

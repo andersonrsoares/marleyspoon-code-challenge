@@ -58,6 +58,8 @@
             </TextView>
 
             <TextView
+                android:autoLink="web"
+                android:linksClickable="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_marginTop="3dp"
                 android:id="@+id/description"

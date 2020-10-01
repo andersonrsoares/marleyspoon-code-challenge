@@ -70,7 +70,6 @@ class RecipeRepositoryTest {
         testSubscriber.assertComplete()
         testSubscriber.assertValues(DataSourceResult.create(remoteData.recipeRootDTO?.recipe?.toRecipe()!!))
 
-
     }
 
     @Test

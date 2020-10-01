@@ -20,6 +20,8 @@ import androidx.test.espresso.assertion.ViewAssertions
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
+import org.hamcrest.CoreMatchers
+import org.hamcrest.Matcher
 import org.junit.Before
 import org.mockito.Mockito
 
@@ -46,7 +48,7 @@ class RecipeFragmentFragmentTest {
     }
 
 
-    @Test fun `test recipe ui`() {
+    @Test fun `test recipe ui all data`() {
         val liveDataRecipe = MutableLiveData<Recipe>()
         val loading = MutableLiveData<Boolean>()
         val message = MutableLiveData<String>()
@@ -57,7 +59,7 @@ class RecipeFragmentFragmentTest {
         Mockito.`when`(testviewModel.retry).thenReturn(retry)
 
 
-        liveDataRecipe.value = Recipe(  title = "some title", description = "description", id = "id")
+        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = "chef",  id = "id")
         val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
 
         scenario.onFragment {
@@ -65,6 +67,9 @@ class RecipeFragmentFragmentTest {
         }
 
         onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withText("Tags: tag 1")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withText("Chef: chef")).check(ViewAssertions.matches(isDisplayed()))
 
         scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.moveToState(Lifecycle.State.DESTROYED)
@@ -72,6 +77,62 @@ class RecipeFragmentFragmentTest {
     }
 
 
+    @Test fun `test recipe ui chef null `() {
+        val liveDataRecipe = MutableLiveData<Recipe>()
+        val loading = MutableLiveData<Boolean>()
+        val message = MutableLiveData<String>()
+        val retry = MutableLiveData<String>()
+        Mockito.`when`(testviewModel.dataRecipe).thenReturn(liveDataRecipe)
+        Mockito.`when`(testviewModel.loading).thenReturn(loading)
+        Mockito.`when`(testviewModel.message).thenReturn(message)
+        Mockito.`when`(testviewModel.retry).thenReturn(retry)
 
+
+        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = null, chefName = "chef",  id = "id")
+        val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
+
+        scenario.onFragment {
+            onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
+            onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
+            onView(withId(R.id.tags)).check(ViewAssertions.matches(CoreMatchers.not(isDisplayed())))
+            onView(withText("Chef: chef")).check(ViewAssertions.matches(isDisplayed()))
+
+        }
+
+
+
+
+        scenario.moveToState(Lifecycle.State.RESUMED)
+        scenario.moveToState(Lifecycle.State.DESTROYED)
+
+    }
+
+    @Test fun `test recipe ui tags empty`() {
+        val liveDataRecipe = MutableLiveData<Recipe>()
+        val loading = MutableLiveData<Boolean>()
+        val message = MutableLiveData<String>()
+        val retry = MutableLiveData<String>()
+        Mockito.`when`(testviewModel.dataRecipe).thenReturn(liveDataRecipe)
+        Mockito.`when`(testviewModel.loading).thenReturn(loading)
+        Mockito.`when`(testviewModel.message).thenReturn(message)
+        Mockito.`when`(testviewModel.retry).thenReturn(retry)
+
+
+        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = null,  id = "id")
+        val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
+
+        scenario.onFragment {
+
+        }
+
+        onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withText("Tags: tag 1")).check(ViewAssertions.matches(isDisplayed()))
+        onView(withId(R.id.chef)).check(ViewAssertions.matches(CoreMatchers.not(isDisplayed())))
+
+        scenario.moveToState(Lifecycle.State.RESUMED)
+        scenario.moveToState(Lifecycle.State.DESTROYED)
+
+    }
 
 }

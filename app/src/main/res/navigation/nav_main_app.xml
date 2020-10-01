@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/listRecipeFragment"
+    android:id="@+id/main_app">
+
+    <fragment
+        android:id="@+id/listRecipeFragment"
+        android:name="br.com.anderson.marleyspooncodechallenge.ui.ListRecipeFragment"
+        android:label="@string/title_recipes" >
+
+        <action
+            android:id="@+id/action_listRecipeFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="br.com.anderson.marleyspooncodechallenge.ui.RecipeFragment"
+        android:label="@string/title_recipe" >
+        <argument android:name="recipeId"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+</navigation>

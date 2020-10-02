@@ -4,4 +4,4 @@ import kotlin.reflect.KClass
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
-annotation class JsonFileResource(val fileName: String, val clazz: KClass<*>)
+annotation class MockJSONDataSource(val fileName: String, val clazz: KClass<*>)

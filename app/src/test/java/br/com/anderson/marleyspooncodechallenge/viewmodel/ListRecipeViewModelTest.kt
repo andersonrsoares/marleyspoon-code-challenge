@@ -2,7 +2,15 @@ package br.com.anderson.marleyspooncodechallenge.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import br.com.anderson.marleyspooncodechallenge.MockJSONDataSource
+import br.com.anderson.marleyspooncodechallenge.MockJSONDataSourceRule
+import br.com.anderson.marleyspooncodechallenge.dto.RecipeResponseDTO
 import br.com.anderson.marleyspooncodechallenge.mock
+import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
+import br.com.anderson.marleyspooncodechallenge.model.Recipe
+import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
+import com.google.common.truth.Truth
+import com.google.gson.Gson
 import io.reactivex.Flowable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -12,10 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
-import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
-import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
-
 
 
 @RunWith(JUnit4::class)
@@ -27,10 +31,24 @@ class ListRecipeViewModelTest {
     private val recipesRepository = mock<RecipesRepository>()
 
     private lateinit var  listRecipeViewModel: ListRecipeViewModel
+
+    @Rule
+    @JvmField
+    val mockJSONDataSourceRule = MockJSONDataSourceRule(Gson())
+
     @Before
     fun init(){
         listRecipeViewModel = ListRecipeViewModel(recipesRepository)
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+    }
+
+    @Test
+    @MockJSONDataSource(fileName = "api-response/recipe_success.json", clazz = RecipeResponseDTO::class)
+    fun `test parse`() {
+        val recipe = mockJSONDataSourceRule.getValue<RecipeResponseDTO>()
+
+        print(recipe)
+        Truth.assertThat(recipe).isNotNull()
     }
 
     @Test

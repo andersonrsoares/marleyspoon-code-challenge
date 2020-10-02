@@ -50,7 +50,6 @@ android {
     }
 
     testOptions {
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
         animationsDisabled true
 
         unitTests {
@@ -166,6 +165,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$atsl_junit"
     androidTestImplementation "androidx.test:runner:$atsl_runner"
     androidTestImplementation "androidx.test:rules:$atsl_runner"
+    androidTestImplementation "org.mockito:mockito-core:$mockito"
+    androidTestImplementation "org.mockito:mockito-android:$mockito"
 
 }
 

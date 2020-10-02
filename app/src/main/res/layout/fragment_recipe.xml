@@ -8,7 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,8 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
 
             <ImageView
@@ -31,6 +30,8 @@
             </ImageView>
 
             <TextView
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_marginTop="10dp"
@@ -39,11 +40,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview">
+                app:layout_constraintTop_toBottomOf="@+id/imageview"/>
 
-            </TextView>
 
             <TextView
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
@@ -53,11 +55,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title">
+                app:layout_constraintTop_toBottomOf="@+id/title"/>
 
-            </TextView>
 
             <TextView
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:autoLink="web"
                 android:linksClickable="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -67,12 +70,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionlabel">
-
-            </TextView>
+                app:layout_constraintTop_toBottomOf="@+id/descriptionlabel"/>
 
 
             <TextView
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_marginTop="10dp"
                 android:id="@+id/tags"
@@ -81,11 +84,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description">
+                app:layout_constraintTop_toBottomOf="@+id/description"/>
 
-            </TextView>
 
             <TextView
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
@@ -94,9 +98,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tags">
+                app:layout_constraintTop_toBottomOf="@+id/tags"/>
 
-            </TextView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -1,9 +1,11 @@
 package br.com.anderson.marleyspooncodechallenge.ui
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -28,16 +30,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
         super.onViewCreated(view, savedInstanceState)
         initRetryButton()
         initObservers()
-        loadRecipes()
-
+        loadRecipe()
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadRecipes()
-    }
-
-    private fun loadRecipes(){
+    private fun loadRecipe(){
         viewModel.fetchRecipe(recipeId())
     }
 

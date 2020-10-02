@@ -31,12 +31,6 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable{
         initRetryButton()
         initObservers()
         loadRecipes()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadRecipes()
     }
 
     private fun loadRecipes(){

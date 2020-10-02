@@ -1,15 +1,11 @@
 package br.com.anderson.marleyspooncodechallenge.ui
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.di.Injectable
 import br.com.anderson.marleyspooncodechallenge.extras.observe

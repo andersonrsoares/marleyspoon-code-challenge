@@ -14,6 +14,7 @@ import kotlin.reflect.KClass
 class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
     private var mValue: Any? = null
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> getValue(): T {
         return mValue as T
     }
@@ -24,10 +25,9 @@ class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
 
             @Throws(Throwable::class)
             override fun evaluate() {
-                val jsonFileResource = description!!.getAnnotation(
+                description?.getAnnotation(
                     MockJSONDataSource::class.java
-                )
-                if (jsonFileResource != null) {
+                )?.let { jsonFileResource->
                     val clazz: KClass<*> = jsonFileResource.clazz
                     val resourceName: String = jsonFileResource.fileName
                     val testClass = description.testClass
@@ -37,6 +37,7 @@ class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
                         mValue = mGson.fromJson(reader, clazz.java)
                     }
                 }
+
                 base.evaluate()
             }
         }

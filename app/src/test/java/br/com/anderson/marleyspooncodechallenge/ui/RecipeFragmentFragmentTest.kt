@@ -1,44 +1,41 @@
 package br.com.anderson.marleyspooncodechallenge.ui
 
-
-import android.os.Build
-import androidx.fragment.app.FragmentFactory
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.annotation.LooperMode
 import android.app.Application
+import android.os.Build
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
 import org.hamcrest.CoreMatchers
-import org.hamcrest.Matcher
 import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito
-
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.LooperMode
 
 @RunWith(AndroidJUnit4::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(sdk = [Build.VERSION_CODES.P], application = Application::class,qualifiers = "w360dp-h880dp-xhdpi" )
+@Config(sdk = [Build.VERSION_CODES.P], application = Application::class, qualifiers = "w360dp-h880dp-xhdpi")
 class RecipeFragmentFragmentTest {
 
     lateinit var testviewModel: RecipeViewModel
 
-    lateinit var factory:FragmentFactory
+    lateinit var factory: FragmentFactory
 
     @Before
-    fun setup(){
+    fun setup() {
         testviewModel = Mockito.mock(RecipeViewModel::class.java)
-        factory = object : FragmentFactory(){
+        factory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
                 return RecipeFragment().apply {
                     this.viewModel = testviewModel
@@ -46,7 +43,6 @@ class RecipeFragmentFragmentTest {
             }
         }
     }
-
 
     @Test fun `test recipe ui all data`() {
         val liveDataRecipe = MutableLiveData<Recipe>()
@@ -58,24 +54,20 @@ class RecipeFragmentFragmentTest {
         Mockito.`when`(testviewModel.message).thenReturn(message)
         Mockito.`when`(testviewModel.retry).thenReturn(retry)
 
-
-        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = "chef",  id = "id")
-        val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
+        liveDataRecipe.value = Recipe(title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = "chef", id = "id")
+        val scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"), themeResId = R.style.AppTheme, factory = factory)
 
         scenario.onFragment {
-
         }
 
-        onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withText("Tags: tag 1")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withText("Chef: chef")).check(ViewAssertions.matches(isDisplayed()))
+        onView(ViewMatchers.withText("description")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withText("some title")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withText("Tags: tag 1")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withText("Chef: chef")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
         scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.moveToState(Lifecycle.State.DESTROYED)
-
     }
-
 
     @Test fun `test recipe ui chef null `() {
         val liveDataRecipe = MutableLiveData<Recipe>()
@@ -87,24 +79,18 @@ class RecipeFragmentFragmentTest {
         Mockito.`when`(testviewModel.message).thenReturn(message)
         Mockito.`when`(testviewModel.retry).thenReturn(retry)
 
-
-        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = null, chefName = "chef",  id = "id")
-        val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
+        liveDataRecipe.value = Recipe(title = "some title", description = "description", tags = null, chefName = "chef", id = "id")
+        val scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"), themeResId = R.style.AppTheme, factory = factory)
 
         scenario.onFragment {
-            onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
-            onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
-            onView(withId(R.id.tags)).check(ViewAssertions.matches(CoreMatchers.not(isDisplayed())))
-            onView(withText("Chef: chef")).check(ViewAssertions.matches(isDisplayed()))
-
+            onView(ViewMatchers.withText("description")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            onView(ViewMatchers.withText("some title")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            onView(ViewMatchers.withId(R.id.tags)).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
+            onView(ViewMatchers.withText("Chef: chef")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         }
-
-
-
 
         scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.moveToState(Lifecycle.State.DESTROYED)
-
     }
 
     @Test fun `test recipe ui tags empty`() {
@@ -117,22 +103,18 @@ class RecipeFragmentFragmentTest {
         Mockito.`when`(testviewModel.message).thenReturn(message)
         Mockito.`when`(testviewModel.retry).thenReturn(retry)
 
-
-        liveDataRecipe.value = Recipe(  title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = null,  id = "id")
-        val  scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"  ), themeResId = R.style.AppTheme, factory = factory)
+        liveDataRecipe.value = Recipe(title = "some title", description = "description", tags = arrayListOf("tag 1"), chefName = null, id = "id")
+        val scenario = launchFragmentInContainer<RecipeFragment>(fragmentArgs = bundleOf("recipeId" to "id"), themeResId = R.style.AppTheme, factory = factory)
 
         scenario.onFragment {
-
         }
 
-        onView(withText("description")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withText("some title")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withText("Tags: tag 1")).check(ViewAssertions.matches(isDisplayed()))
-        onView(withId(R.id.chef)).check(ViewAssertions.matches(CoreMatchers.not(isDisplayed())))
+        onView(ViewMatchers.withText("description")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withText("some title")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withText("Tags: tag 1")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(ViewMatchers.withId(R.id.chef)).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
 
         scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.moveToState(Lifecycle.State.DESTROYED)
-
     }
-
 }

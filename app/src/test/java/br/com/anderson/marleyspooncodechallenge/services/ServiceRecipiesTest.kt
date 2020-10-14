@@ -1,35 +1,33 @@
 package br.com.anderson.marleyspooncodechallenge.services
 
-
 import br.com.anderson.marleyspooncodechallenge.ApiUtil
 import br.com.anderson.marleyspooncodechallenge.dto.RecipeQueryDTO
 import br.com.anderson.marleyspooncodechallenge.dto.RecipesQueryDTO
-import org.junit.*
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.stream.MalformedJsonException
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import retrofit2.HttpException
-
 
 @RunWith(JUnit4::class)
 class ServiceRecipiesTest : BaseServiceTest() {
 
     @Test
     fun `test recipes response success full data`() {
-        //GIVEN
-        ApiUtil.enqueueResponse(mockWebServer,"recipes_success.json")
+        // GIVEN
+        ApiUtil.enqueueResponse(mockWebServer, "recipes_success.json")
 
         val query = RecipesQueryDTO()
         val response = service.getRecipes(query).test()
 
-        //when
+        // when
         val request = mockWebServer.takeRequest()
         assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
-        //THEN
+        // THEN
 
         response.assertNoErrors()
-        val recipesResult =  response.values().first()
+        val recipesResult = response.values().first()
         assertThat(recipesResult.recipeCollectionRootDTO).isNotNull()
         assertThat(recipesResult.recipeCollectionRootDTO?.recipeCollection).isNotNull()
         assertThat(recipesResult.recipeCollectionRootDTO?.recipeCollection).isNotNull()
@@ -48,19 +46,19 @@ class ServiceRecipiesTest : BaseServiceTest() {
 
     @Test
     fun `test recipe response success full data`() {
-        //GIVEN
-        ApiUtil.enqueueResponse(mockWebServer,"recipe_success.json")
+        // GIVEN
+        ApiUtil.enqueueResponse(mockWebServer, "recipe_success.json")
 
         val query = RecipeQueryDTO("id")
         val response = service.getRecipe(query).test()
 
-        //when
+        // when
         val request = mockWebServer.takeRequest()
         assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
-        //THEN
+        // THEN
 
         response.assertNoErrors()
-        val recipesResult =  response.values().first()
+        val recipesResult = response.values().first()
         assertThat(recipesResult.recipeRootDTO).isNotNull()
         assertThat(recipesResult.recipeRootDTO?.recipe).isNotNull()
 
@@ -79,17 +77,16 @@ class ServiceRecipiesTest : BaseServiceTest() {
         assertThat(recipe.chef?.name).contains("Mark Zucchiniberg")
     }
 
-
     @Test
     fun `test response not json`() {
-        //GIVEN
-        ApiUtil.enqueueResponse(mockWebServer,"error_json_response.html")
+        // GIVEN
+        ApiUtil.enqueueResponse(mockWebServer, "error_json_response.html")
 
         val response = service.getRecipes(RecipesQueryDTO()).test()
-        //when
+        // when
         val request = mockWebServer.takeRequest()
         assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
-        //THEN
+        // THEN
 
         response.assertError {
             it is MalformedJsonException
@@ -98,18 +95,17 @@ class ServiceRecipiesTest : BaseServiceTest() {
 
     @Test
     fun `test unauthorized`() {
-        //GIVEN
-        ApiUtil.enqueueResponse(mockWebServer =  mockWebServer,fileName = "error_unauthorized.json",statuscode = 401)
+        // GIVEN
+        ApiUtil.enqueueResponse(mockWebServer = mockWebServer, fileName = "error_unauthorized.json", statuscode = 401)
 
         val response = service.getRecipes(RecipesQueryDTO()).test()
-        //when
+        // when
         val request = mockWebServer.takeRequest()
         assertThat(request.path).isEqualTo("/content/v1/spaces/kk2bw5ojx476")
 
-        //THEN
+        // THEN
         response.assertError {
             it is HttpException && (it as? HttpException)?.code() == 401
         }
     }
-
 }

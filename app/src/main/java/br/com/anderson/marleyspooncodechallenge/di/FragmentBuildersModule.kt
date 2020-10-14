@@ -5,16 +5,13 @@ import br.com.anderson.marleyspooncodechallenge.ui.RecipeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-
 @Suppress("unused")
 @Module
-abstract class MainFragmentBuildersModule {
+abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeListRecipe(): ListRecipeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeRecipeFragment(): RecipeFragment
-
 }
-

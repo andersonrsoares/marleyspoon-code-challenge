@@ -1,7 +1,6 @@
 package br.com.anderson.marleyspooncodechallenge.dto
 
 import com.google.gson.annotations.Expose
-import java.util.*
 
 open class QueryDTO(@field:Expose private val query: String) {
 

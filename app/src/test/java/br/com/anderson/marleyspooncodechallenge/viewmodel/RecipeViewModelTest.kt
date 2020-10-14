@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import br.com.anderson.marleyspooncodechallenge.mock
 import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
+import br.com.anderson.marleyspooncodechallenge.repository.RecipeRepository
 import io.reactivex.Flowable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -13,9 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import br.com.anderson.marleyspooncodechallenge.repository.RecipeRepository
 import org.mockito.Mockito
-
 
 @RunWith(JUnit4::class)
 class RecipeViewModelTest {
@@ -25,9 +24,9 @@ class RecipeViewModelTest {
 
     private val recipeRepository = mock<RecipeRepository>()
 
-    private lateinit var  recipeViewModel: RecipeViewModel
+    private lateinit var recipeViewModel: RecipeViewModel
     @Before
-    fun init(){
+    fun init() {
         recipeViewModel = RecipeViewModel(recipeRepository)
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
@@ -39,7 +38,7 @@ class RecipeViewModelTest {
 
         val repositoryResponse = Recipe(id = "id")
 
-        Mockito.`when`(recipeRepository.getRecipe(id)).thenReturn(Flowable.just( DataSourceResult.create(repositoryResponse)))
+        Mockito.`when`(recipeRepository.getRecipe(id)).thenReturn(Flowable.just(DataSourceResult.create(repositoryResponse)))
 
         val observerData = mock<Observer<Recipe>>()
         val observerLoading = mock<Observer<Boolean>>()
@@ -70,5 +69,4 @@ class RecipeViewModelTest {
         Mockito.verify(observerData, Mockito.never()).onChanged(null)
         Mockito.verify(observerLoading).onChanged(false)
     }
-
 }

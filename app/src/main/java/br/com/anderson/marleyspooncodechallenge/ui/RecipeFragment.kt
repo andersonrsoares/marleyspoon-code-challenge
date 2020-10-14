@@ -1,10 +1,10 @@
 package br.com.anderson.marleyspooncodechallenge.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.di.Injectable
@@ -16,8 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_recipe.*
 import javax.inject.Inject
 
-
-class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
+class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable {
 
     @Inject
     lateinit var viewModel: RecipeViewModel
@@ -29,42 +28,42 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
         loadRecipe()
     }
 
-    private fun loadRecipe(){
+    private fun loadRecipe() {
         viewModel.fetchRecipe(recipeId())
     }
 
-    private fun initObservers(){
-        observe(viewModel.dataRecipe,this::onLoadDataRecipe)
-        observe(viewModel.message,this::onMessage)
-        observe(viewModel.loading,this::onLoading)
-        observe(viewModel.retry,this::onRetry)
+    private fun initObservers() {
+        observe(viewModel.dataRecipe, this::onLoadDataRecipe)
+        observe(viewModel.message, this::onMessage)
+        observe(viewModel.loading, this::onLoading)
+        observe(viewModel.retry, this::onRetry)
     }
-
 
     private fun onLoadDataRecipe(data: Recipe) {
         Glide.with(requireContext()).load(data.photo).apply(
             RequestOptions()
                 .placeholder(R.drawable.image_placeholder)
-                .centerCrop()).into(imageview)
+                .centerCrop()
+        ).into(imageview)
 
         title.text = data.title
         description.text = data.description
         chef.isGone = data.chefName?.let {
-            chef.text =  resources.getString(R.string.label_chef,it)
-        }  == null
+            chef.text = resources.getString(R.string.label_chef, it)
+        } == null
 
         tags.isGone = data.tags?.takeIf { it.isNotEmpty() }?.let {
-            tags.text =  resources.getString(R.string.label_tags,it.joinToString(", "))
+            tags.text = resources.getString(R.string.label_tags, it.joinToString(", "))
         } == null
     }
 
     private fun recipeId() = RecipeFragmentArgs.fromBundle(requireArguments()).recipeId
 
-    private fun initRetryButton(){
+    private fun initRetryButton() {
         retrybutton.setOnClickListener(this::onRetryClick)
     }
 
-    fun onRetryClick(view: View){
+    fun onRetryClick(view: View) {
         viewModel.refresh()
         view.isVisible = false
     }
@@ -78,18 +77,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable{
         retrybutton.isVisible = true
     }
 
-    private fun cleanMessages(){
+    private fun cleanMessages() {
         retrybutton.isVisible = false
         message.text = ""
     }
 
     private fun onLoading(data: Boolean) {
-        if(data){
+        if (data) {
             cleanMessages()
         }
         progressbar.isVisible = data
     }
-
 
     /**
      * Created to be able to override in tests

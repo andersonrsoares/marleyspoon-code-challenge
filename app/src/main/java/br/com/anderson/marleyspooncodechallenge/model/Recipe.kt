@@ -23,4 +23,3 @@ data class Recipe(
     @SerializedName("tags")
     var tags: List<String>? = null
 )
-

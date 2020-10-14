@@ -3,6 +3,9 @@ package br.com.anderson.marleyspooncodechallenge.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.anderson.marleyspooncodechallenge.mock
+import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
+import br.com.anderson.marleyspooncodechallenge.model.Recipe
+import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
 import io.reactivex.Flowable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -11,12 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.Mockito.*
-import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
-import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
-
-
+import org.mockito.Mockito
 
 @RunWith(JUnit4::class)
 class ListRecipeViewModelTest {
@@ -26,9 +24,9 @@ class ListRecipeViewModelTest {
 
     private val recipesRepository = mock<RecipesRepository>()
 
-    private lateinit var  listRecipeViewModel: ListRecipeViewModel
+    private lateinit var listRecipeViewModel: ListRecipeViewModel
     @Before
-    fun init(){
+    fun init() {
         listRecipeViewModel = ListRecipeViewModel(recipesRepository)
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
@@ -38,7 +36,7 @@ class ListRecipeViewModelTest {
 
         val repositoryResponse = listOf(Recipe(id = "id"))
 
-        `when`(recipesRepository.getRecipes()).thenReturn(Flowable.just(DataSourceResult.create(repositoryResponse)))
+        Mockito.`when`(recipesRepository.getRecipes()).thenReturn(Flowable.just(DataSourceResult.create(repositoryResponse)))
 
         val observerData = mock<Observer<List<Recipe>>>()
         val observerLoading = mock<Observer<Boolean>>()
@@ -46,18 +44,18 @@ class ListRecipeViewModelTest {
         listRecipeViewModel.loading.observeForever(observerLoading)
         listRecipeViewModel.dataRecipes.observeForever(observerData)
         listRecipeViewModel.listRecipes()
-        verify(observerLoading).onChanged(true)
-        verify(recipesRepository).getRecipes()
-        verify(observerData).onChanged(repositoryResponse)
-        verify(observerLoading, times(2)).onChanged(false)
+        Mockito.verify(observerLoading).onChanged(true)
+        Mockito.verify(recipesRepository).getRecipes()
+        Mockito.verify(observerData).onChanged(repositoryResponse)
+        Mockito.verify(observerLoading, Mockito.times(2)).onChanged(false)
     }
 
     @Test
     fun `list recipes data empty`() {
 
-         val repositoryResponse = listOf<Recipe>()
+        val repositoryResponse = listOf<Recipe>()
 
-        `when`(recipesRepository.getRecipes()).thenReturn(Flowable.just( DataSourceResult.create(repositoryResponse)))
+        Mockito.`when`(recipesRepository.getRecipes()).thenReturn(Flowable.just(DataSourceResult.create(repositoryResponse)))
 
         val observerData = mock<Observer<List<Recipe>>>()
         val observerLoading = mock<Observer<Boolean>>()
@@ -65,10 +63,9 @@ class ListRecipeViewModelTest {
         listRecipeViewModel.loading.observeForever(observerLoading)
         listRecipeViewModel.dataRecipes.observeForever(observerData)
         listRecipeViewModel.listRecipes()
-        verify(observerLoading).onChanged(true)
-        verify(recipesRepository).getRecipes()
-        verify(observerData, never()).onChanged(repositoryResponse)
-        verify(observerLoading, times(2)).onChanged(false)
+        Mockito.verify(observerLoading).onChanged(true)
+        Mockito.verify(recipesRepository).getRecipes()
+        Mockito.verify(observerData, Mockito.never()).onChanged(repositoryResponse)
+        Mockito.verify(observerLoading, Mockito.times(2)).onChanged(false)
     }
-
 }

@@ -1,6 +1,7 @@
 package br.com.anderson.marleyspooncodechallenge.persistence
 
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 
 @Database(
@@ -12,8 +13,3 @@ import br.com.anderson.marleyspooncodechallenge.model.Recipe
 abstract class ContentfulDb : RoomDatabase() {
     abstract fun contentfulDao(): ContentfulDao
 }
-
-
-
-
-

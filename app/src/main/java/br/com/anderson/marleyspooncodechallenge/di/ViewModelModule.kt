@@ -28,5 +28,4 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RecipeViewModel::class)
     abstract fun bindRecipeViewModel(viewModel: RecipeViewModel): ViewModel
-
 }

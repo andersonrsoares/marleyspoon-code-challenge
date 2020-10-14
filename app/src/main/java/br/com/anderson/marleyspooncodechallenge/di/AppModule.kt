@@ -3,14 +3,11 @@ package br.com.anderson.marleyspooncodechallenge.di
 import android.app.Application
 import androidx.room.Room
 import br.com.anderson.marleyspooncodechallenge.BuildConfig
-import br.com.anderson.marleyspooncodechallenge.dto.Contentful
 import br.com.anderson.marleyspooncodechallenge.extras.AutorizationInterceptor
 import br.com.anderson.marleyspooncodechallenge.persistence.ContentfulDao
 import br.com.anderson.marleyspooncodechallenge.persistence.ContentfulDb
 import br.com.anderson.marleyspooncodechallenge.provider.ResourceProvider
 import br.com.anderson.marleyspooncodechallenge.service.ContentfulService
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -39,7 +36,6 @@ class AppModule {
             .create(ContentfulService::class.java)
     }
 
-
     @Singleton
     @Provides
     fun okHttpClientCacheProvider(app: Application): Cache {
@@ -48,7 +44,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun okHttpClientProvider(autorizationInterceptor: AutorizationInterceptor): OkHttpClient{
+    fun okHttpClientProvider(autorizationInterceptor: AutorizationInterceptor): OkHttpClient {
         return OkHttpClient().newBuilder()
             .connectTimeout(6000, TimeUnit.MILLISECONDS)
             .readTimeout((1000 * 60).toLong(), TimeUnit.MILLISECONDS)
@@ -89,6 +85,4 @@ class AppModule {
     fun provideResource(app: Application): ResourceProvider {
         return ResourceProvider(app)
     }
-
-
 }

@@ -18,12 +18,11 @@ abstract class ContentfulDao {
     abstract fun allRecipes(): Single<List<Recipe>>
 
     @Query("SELECT * from Recipe where id == :id")
-    abstract fun getRecipe(id:String): Maybe<Recipe>
+    abstract fun getRecipe(id: String): Maybe<Recipe>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insertRecipe(user: Recipe): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun updateRecipe(user: Recipe): Completable
-
 }

@@ -1,33 +1,35 @@
 package br.com.anderson.marleyspooncodechallenge.adapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.util.concurrent.Executors
 
-
-class ListRecipeAdapter : ListAdapter<Recipe,ListRecipeAdapter.Holder>(
+class ListRecipeAdapter : ListAdapter<Recipe, ListRecipeAdapter.Holder>(
     AsyncDifferConfig.Builder<Recipe>(diffCallback)
-    .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
-    .build()){
+        .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
+        .build()
+) {
 
-    var itemOnClick: (Recipe) -> Unit = {_ ->  }
+    var itemOnClick: (Recipe) -> Unit = { _ -> }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListRecipeAdapter.Holder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.adapter_recipe, parent, false)
+            .inflate(R.layout.adapter_recipe, parent, false)
         return Holder(view)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        binds(holder,getItem(position))
+        binds(holder, getItem(position))
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +37,7 @@ class ListRecipeAdapter : ListAdapter<Recipe,ListRecipeAdapter.Holder>(
     }
 
     private fun binds(holder: Holder, data: Recipe) {
-        with(holder){
+        with(holder) {
             itemView.setOnClickListener {
                 itemOnClick(data)
             }
@@ -43,9 +45,10 @@ class ListRecipeAdapter : ListAdapter<Recipe,ListRecipeAdapter.Holder>(
             Glide.with(imageview.context).load(data.photo).apply(
                 RequestOptions()
                     .placeholder(R.drawable.image_placeholder)
-                    .centerCrop()).into(imageview)
+                    .centerCrop()
+            ).into(imageview)
 
-            title .text = data.title
+            title.text = data.title
         }
     }
 
@@ -56,15 +59,14 @@ class ListRecipeAdapter : ListAdapter<Recipe,ListRecipeAdapter.Holder>(
 
     companion object {
         private val diffCallback: DiffUtil.ItemCallback<Recipe> =
-                object : DiffUtil.ItemCallback<Recipe>() {
-                    override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-                        return oldItem == newItem
-                    }
-
-                    override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-                        return oldItem == newItem
-                    }
+            object : DiffUtil.ItemCallback<Recipe>() {
+                override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+                    return oldItem == newItem
                 }
+
+                override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+                    return oldItem == newItem
+                }
+            }
     }
 }
-

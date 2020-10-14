@@ -5,13 +5,12 @@ import com.google.gson.annotations.SerializedName
 class RecipeResponseDTO(
     @SerializedName("data")
     var recipeRootDTO: RecipeRootDTO? = null
-): BaseResponseDTO()
+) : BaseResponseDTO()
 
 class RecipeCollencionResponseDTO(
     @SerializedName("data")
     var recipeCollectionRootDTO: RecipeCollectionRootDTO? = null
-):BaseResponseDTO()
-
+) : BaseResponseDTO()
 
 data class RecipeRootDTO(
     @SerializedName("recipe")
@@ -28,11 +27,10 @@ data class RecipeCollectionDTO(
     var items: List<RecipeDTO>? = null,
     @SerializedName("total")
     var total: Int = 0
-){
-        fun toRecipes(): List<Recipe>{
-            return items?.map { it.toRecipe() }.orEmpty()
-        }
-
+) {
+    fun toRecipes(): List<Recipe> {
+        return items?.map { it.toRecipe() }.orEmpty()
+    }
 }
 
 data class RecipeDTO(
@@ -48,12 +46,11 @@ data class RecipeDTO(
     var description: String = "",
     @SerializedName("chef")
     var chef: ChefDTO? = null
-){
-    fun toRecipe(): Recipe{
-       return Recipe(photo = photo?.url, title = title, description = description, id = sys?.id.toString(), tags = tagsCollection?.items?.map { it.name }, chefName = chef?.name)
+) {
+    fun toRecipe(): Recipe {
+        return Recipe(photo = photo?.url, title = title, description = description, id = sys?.id.toString(), tags = tagsCollection?.items?.map { it.name }, chefName = chef?.name)
     }
 }
-
 
 data class ChefDTO(
     @SerializedName("name")

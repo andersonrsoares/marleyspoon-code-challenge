@@ -7,17 +7,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
-
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.P])
-class RecipeDaoTest : BaseDaoTest(){
-
-
+class RecipeDaoTest : BaseDaoTest() {
 
     @Test fun `test empty db`() {
         database.contentfulDao().allRecipes()
-                .test()
-                .assertValue { it.isEmpty() }
+            .test()
+            .assertValue { it.isEmpty() }
     }
 
     @Test fun `test insert and get recipes`() {
@@ -25,8 +22,8 @@ class RecipeDaoTest : BaseDaoTest(){
         database.contentfulDao().insertRecipe(RECIPE).blockingAwait()
 
         database.contentfulDao().allRecipes()
-                .test()
-                .assertValue { it.find { f-> f.id == "id" } != null }
+            .test()
+            .assertValue { it.find { f -> f.id == "id" } != null }
     }
 
     @Test fun `test update and get recipes`() {
@@ -38,9 +35,9 @@ class RecipeDaoTest : BaseDaoTest(){
         database.contentfulDao().updateRecipe(updated).blockingAwait()
 
         database.contentfulDao().allRecipes()
-                .test()
-                // assertValue asserts that there was only one emission of the user
-                .assertValue { it.find { f->  f.title  == newTilte} != null }
+            .test()
+            // assertValue asserts that there was only one emission of the user
+            .assertValue { it.find { f -> f.title == newTilte } != null }
     }
 
     @Test fun `test insert and get recipe`() {
@@ -49,10 +46,10 @@ class RecipeDaoTest : BaseDaoTest(){
 
         database.contentfulDao().getRecipe("id")
             .test()
-            .assertValue { it == RECIPE}
+            .assertValue { it == RECIPE }
     }
 
     companion object {
-        private val RECIPE = Recipe(id = "id",description = "description", title = "title")
+        private val RECIPE = Recipe(id = "id", description = "description", title = "title")
     }
 }

@@ -19,6 +19,7 @@ import br.com.anderson.marleyspooncodechallenge.RecyclerViewMatcher
 import br.com.anderson.marleyspooncodechallenge.ViewModelUtil
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeFragment
+import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeFragmentDirections
 import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeViewModel
 import org.junit.Before
 import org.junit.Test

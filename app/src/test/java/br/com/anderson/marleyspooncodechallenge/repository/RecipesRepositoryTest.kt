@@ -1,6 +1,5 @@
 package br.com.anderson.marleyspooncodechallenge.repository
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.anderson.marleyspooncodechallenge.any
 import br.com.anderson.marleyspooncodechallenge.dto.RecipeCollectionDTO
 import br.com.anderson.marleyspooncodechallenge.dto.RecipeCollectionRootDTO
@@ -19,7 +18,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -36,17 +34,13 @@ class RecipesRepositoryTest {
     private val codeWarsDao = Mockito.mock(ContentfulDao::class.java)
     private lateinit var recipesRepository: RecipesRepository
 
-    @Rule
-    @JvmField
-    val instantExecutorRule = InstantTaskExecutorRule()
-
     @Before
     fun setup() {
         val db = Mockito.mock(ContentfulDb::class.java)
         Mockito.`when`(db.contentfulDao()).thenReturn(codeWarsDao)
         Mockito.`when`(db.runInTransaction(ArgumentMatchers.any())).thenCallRealMethod()
 
-        recipesRepository = RecipesRepository(codeWarsDao, codeWarsService)
+        recipesRepository = RecipesRepositoryImpl(codeWarsDao, codeWarsService)
     }
 
     @Test

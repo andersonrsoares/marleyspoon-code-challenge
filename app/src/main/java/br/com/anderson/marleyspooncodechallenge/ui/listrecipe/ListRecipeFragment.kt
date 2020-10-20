@@ -31,6 +31,7 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initObservers()
+        initAdapter()
         loadRecipes()
     }
 
@@ -53,9 +54,12 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable {
         observe(viewModel.clean, this::onClean)
     }
 
-    private fun initRecycleView() {
+    private fun initAdapter() {
         adapter = ListRecipeAdapter()
         adapter.itemOnClick = this::onItemClick
+    }
+
+    private fun initRecycleView() {
         recycleview.adapter = adapter
         recycleview.layoutManager = LinearLayoutManager(requireContext()).apply {
             orientation = LinearLayoutManager.VERTICAL

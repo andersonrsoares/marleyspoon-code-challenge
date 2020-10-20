@@ -1,16 +1,16 @@
-package br.com.anderson.marleyspooncodechallenge.ui
+package br.com.anderson.marleyspooncodechallenge.ui.recipe
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.di.Injectable
 import br.com.anderson.marleyspooncodechallenge.extras.observe
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_recipe.*
@@ -18,14 +18,22 @@ import javax.inject.Inject
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable {
 
+    private val viewModel: RecipeViewModel by viewModels {
+        factory
+    }
+
     @Inject
-    lateinit var viewModel: RecipeViewModel
+    lateinit var factory: ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initObservers()
+        loadRecipe()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRetryButton()
-        initObservers()
-        loadRecipe()
     }
 
     private fun loadRecipe() {
@@ -57,7 +65,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable {
         } == null
     }
 
-    private fun recipeId() = RecipeFragmentArgs.fromBundle(requireArguments()).recipeId
+    private fun recipeId() = RecipeFragmentArgs.fromBundle(
+        requireArguments()
+    ).recipeId
 
     private fun initRetryButton() {
         retrybutton.setOnClickListener(this::onRetryClick)
@@ -88,9 +98,4 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), Injectable {
         }
         progressbar.isVisible = data
     }
-
-    /**
-     * Created to be able to override in tests
-     */
-    fun navController() = findNavController()
 }

@@ -1,7 +1,7 @@
 package br.com.anderson.marleyspooncodechallenge.di
 
-import br.com.anderson.marleyspooncodechallenge.ui.ListRecipeFragment
-import br.com.anderson.marleyspooncodechallenge.ui.RecipeFragment
+import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeFragment
+import br.com.anderson.marleyspooncodechallenge.ui.recipe.RecipeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

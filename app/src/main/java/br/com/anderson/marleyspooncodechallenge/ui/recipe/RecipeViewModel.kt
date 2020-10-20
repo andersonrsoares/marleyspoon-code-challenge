@@ -1,4 +1,4 @@
-package br.com.anderson.marleyspooncodechallenge.viewmodel
+package br.com.anderson.marleyspooncodechallenge.ui.recipe
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.ErrorResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.repository.RecipeRepository
+import br.com.anderson.marleyspooncodechallenge.viewmodel.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 

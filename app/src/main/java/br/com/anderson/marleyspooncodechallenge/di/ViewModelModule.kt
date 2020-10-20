@@ -3,8 +3,8 @@ package br.com.anderson.marleyspooncodechallenge.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.anderson.marleyspooncodechallenge.viewmodel.ListRecipeViewModel
-import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
+import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeViewModel
+import br.com.anderson.marleyspooncodechallenge.ui.recipe.RecipeViewModel
 import br.com.anderson.marleyspooncodechallenge.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module

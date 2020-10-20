@@ -1,9 +1,11 @@
-package br.com.anderson.marleyspooncodechallenge.ui
+package br.com.anderson.marleyspooncodechallenge.ui.listrecipe
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.anderson.marleyspooncodechallenge.R
@@ -12,23 +14,31 @@ import br.com.anderson.marleyspooncodechallenge.di.Injectable
 import br.com.anderson.marleyspooncodechallenge.extras.observe
 import br.com.anderson.marleyspooncodechallenge.extras.setDivider
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.viewmodel.ListRecipeViewModel
 import kotlinx.android.synthetic.main.fragment_list_recipe.*
 import javax.inject.Inject
 
 class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable {
 
     lateinit var adapter: ListRecipeAdapter
+
+    private val viewModel: ListRecipeViewModel by viewModels {
+        factory
+    }
+
     @Inject
-    lateinit var viewModel: ListRecipeViewModel
+    lateinit var factory: ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initObservers()
+        loadRecipes()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycleView()
         initrRefresh()
         initRetryButton()
-        initObservers()
-        loadRecipes()
     }
 
     private fun loadRecipes() {
@@ -54,7 +64,11 @@ class ListRecipeFragment : Fragment(R.layout.fragment_list_recipe), Injectable {
     }
 
     private fun onItemClick(recipe: Recipe) {
-        navController().navigate(ListRecipeFragmentDirections.actionListRecipeFragmentToRecipeFragment(recipe.id))
+        navController().navigate(
+            ListRecipeFragmentDirections.actionListRecipeFragmentToRecipeFragment(
+                recipe.id
+            )
+        )
     }
 
     private fun onLoadDataListRecipies(data: List<Recipe>) {

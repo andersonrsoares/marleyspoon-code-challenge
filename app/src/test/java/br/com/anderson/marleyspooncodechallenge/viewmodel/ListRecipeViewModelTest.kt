@@ -9,6 +9,7 @@ import br.com.anderson.marleyspooncodechallenge.mock
 import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
+import br.com.anderson.marleyspooncodechallenge.ui.listrecipe.ListRecipeViewModel
 import com.google.common.truth.Truth
 import com.google.gson.Gson
 import io.reactivex.Flowable
@@ -37,7 +38,10 @@ class ListRecipeViewModelTest {
 
     @Before
     fun init() {
-        listRecipeViewModel = ListRecipeViewModel(recipesRepository)
+        listRecipeViewModel =
+            ListRecipeViewModel(
+                recipesRepository
+            )
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
 

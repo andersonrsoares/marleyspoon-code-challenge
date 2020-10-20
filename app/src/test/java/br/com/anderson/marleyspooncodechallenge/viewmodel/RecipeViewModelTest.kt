@@ -6,6 +6,7 @@ import br.com.anderson.marleyspooncodechallenge.mock
 import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.repository.RecipeRepository
+import br.com.anderson.marleyspooncodechallenge.ui.recipe.RecipeViewModel
 import io.reactivex.Flowable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -27,7 +28,10 @@ class RecipeViewModelTest {
     private lateinit var recipeViewModel: RecipeViewModel
     @Before
     fun init() {
-        recipeViewModel = RecipeViewModel(recipeRepository)
+        recipeViewModel =
+            RecipeViewModel(
+                recipeRepository
+            )
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
 

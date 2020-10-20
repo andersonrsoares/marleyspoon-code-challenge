@@ -12,8 +12,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.ui.RecipeFragment
-import br.com.anderson.marleyspooncodechallenge.viewmodel.RecipeViewModel
+import br.com.anderson.marleyspooncodechallenge.ui.recipe.RecipeFragment
+import br.com.anderson.marleyspooncodechallenge.ui.recipe.RecipeViewModel
 import org.hamcrest.CoreMatchers
 import org.junit.Before
 import org.junit.Test
@@ -33,9 +33,10 @@ class RecipeFragmentFragmentTest {
         testviewModel = Mockito.mock(RecipeViewModel::class.java)
         factory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-                return RecipeFragment().apply {
-                    this.viewModel = testviewModel
-                }
+                return RecipeFragment()
+                    .apply {
+                        this.factory = ViewModelUtil.createFor(testviewModel)
+                    }
             }
         }
     }

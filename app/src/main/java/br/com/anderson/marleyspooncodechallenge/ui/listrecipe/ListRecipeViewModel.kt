@@ -1,10 +1,11 @@
-package br.com.anderson.marleyspooncodechallenge.viewmodel
+package br.com.anderson.marleyspooncodechallenge.ui.listrecipe
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
+import br.com.anderson.marleyspooncodechallenge.viewmodel.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 

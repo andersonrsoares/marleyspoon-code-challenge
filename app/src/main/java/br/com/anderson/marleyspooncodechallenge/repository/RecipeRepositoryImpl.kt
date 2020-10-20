@@ -27,7 +27,10 @@ class RecipeRepositoryImpl constructor(
             .map {
                 it.recipeRootDTO?.recipe?.toRecipe()!!
             }.doOnSuccess {
-                localDataSouse.insertRecipe(it).subscribe()
+                localDataSouse.insertRecipe(it).doOnSubscribe { disposable ->
+                    if (!disposable.isDisposed)
+                        disposable.dispose()
+                }.subscribe()
             }.transformToDataSourceResult().toFlowable()
     }
 

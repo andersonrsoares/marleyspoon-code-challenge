@@ -29,7 +29,10 @@ class RecipesRepositoryImpl constructor(
                 it.recipeCollectionRootDTO?.recipeCollection?.toRecipes() ?: arrayListOf()
             }.doOnSuccess {
                 it.forEach { recipe ->
-                    localDataSouse.insertRecipe(recipe).subscribe()
+                    localDataSouse.insertRecipe(recipe).doOnSubscribe { disposable ->
+                        if (!disposable.isDisposed)
+                            disposable.dispose()
+                    }.subscribe()
                 }
             }.transformToDataSourceResult().toFlowable()
     }

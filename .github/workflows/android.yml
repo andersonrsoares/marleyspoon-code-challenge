@@ -51,5 +51,16 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         - name: Link to SonarCloud Report
           run: echo "hhttps://sonarcloud.io/dashboard?id=andersonrsoares_marleyspoon-code-challenge"
-  
+          
+  testemulator:
+    runs-on: macos-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 29
+        script: ./gradlew connectedCheck 
       

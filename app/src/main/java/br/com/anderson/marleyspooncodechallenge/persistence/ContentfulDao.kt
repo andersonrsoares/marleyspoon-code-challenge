@@ -5,13 +5,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
-import br.com.anderson.marleyspooncodechallenge.testing.OpenForTesting
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 
 @Dao
-@OpenForTesting
 abstract class ContentfulDao {
 
     @Query("SELECT * from Recipe")

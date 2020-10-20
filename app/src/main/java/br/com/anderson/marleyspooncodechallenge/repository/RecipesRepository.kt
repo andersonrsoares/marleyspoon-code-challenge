@@ -6,7 +6,6 @@ import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.persistence.ContentfulDao
 import br.com.anderson.marleyspooncodechallenge.service.ContentfulService
-import br.com.anderson.marleyspooncodechallenge.testing.OpenForTesting
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +13,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@OpenForTesting
 class RecipesRepository @Inject constructor(
     val localDataSouse: ContentfulDao,
     val remoteDataSource: ContentfulService

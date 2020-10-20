@@ -3,14 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'kotlin-allopen'
 apply plugin: 'jacoco'
 apply plugin: 'org.sonarqube'
 
-allOpen {
-    // allows mocking for classes w/o directly opening them for release builds
-    annotation 'br.com.anderson.marleyspooncodechallenge.testing.OpenClass'
-}
 
 configurations {
     ktlint
@@ -182,7 +177,7 @@ tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest','connectedDebugAndroidTest']) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
     group = 'Reporting'
     description = 'Generate Jacoco coverage reports'
 

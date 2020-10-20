@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import br.com.anderson.marleyspooncodechallenge.R
 import br.com.anderson.marleyspooncodechallenge.model.ErrorResult
 import br.com.anderson.marleyspooncodechallenge.provider.ResourceProvider
-import br.com.anderson.marleyspooncodechallenge.testing.OpenForTesting
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-@OpenForTesting
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
     @Inject
@@ -59,7 +57,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         complete()
     }
 
-    fun refresh() {
+    open fun refresh() {
         _clean.postValue(true)
     }
 }

@@ -1,7 +1,6 @@
 package br.com.anderson.marleyspooncodechallenge
 
 import com.google.gson.Gson
-
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -9,7 +8,6 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import kotlin.reflect.KClass
-
 
 class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
     private var mValue: Any? = null
@@ -19,7 +17,6 @@ class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
         return mValue as T
     }
 
-
     override fun apply(base: Statement, description: Description?): Statement {
         return object : Statement() {
 
@@ -27,7 +24,7 @@ class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
             override fun evaluate() {
                 description?.getAnnotation(
                     MockJSONDataSource::class.java
-                )?.let { jsonFileResource->
+                )?.let { jsonFileResource ->
                     val clazz: KClass<*> = jsonFileResource.clazz
                     val resourceName: String = jsonFileResource.fileName
                     val testClass = description.testClass
@@ -42,7 +39,4 @@ class MockJSONDataSourceRule(private val mGson: Gson) : TestRule {
             }
         }
     }
-
 }
-
-

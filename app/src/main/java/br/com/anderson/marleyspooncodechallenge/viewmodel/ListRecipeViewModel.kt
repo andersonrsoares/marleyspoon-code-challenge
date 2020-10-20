@@ -5,11 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import br.com.anderson.marleyspooncodechallenge.model.DataSourceResult
 import br.com.anderson.marleyspooncodechallenge.model.Recipe
 import br.com.anderson.marleyspooncodechallenge.repository.RecipesRepository
-import br.com.anderson.marleyspooncodechallenge.testing.OpenForTesting
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-@OpenForTesting
 class ListRecipeViewModel @Inject constructor(val repository: RecipesRepository) : BaseViewModel() {
 
     private var _dataRecipes = MutableLiveData<List<Recipe>>()
